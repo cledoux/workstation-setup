@@ -1,4 +1,5 @@
 ---
 - hosts: localhost
-  roles:
-    - bootstrap
+  tasks:
+    - include_role:
+        name: bootstrap
