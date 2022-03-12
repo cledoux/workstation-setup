@@ -1,8 +1,0 @@
----
-- name: Install ubuntu specific packages.
-  ansible.builtin.package:
-    state: present
-    name:
-      - ubuntu-restricted-extras
-      - ppa-purge
-  become: true

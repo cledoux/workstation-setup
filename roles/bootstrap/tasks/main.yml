@@ -1,8 +1,27 @@
 ---
 
-- name: Install packages common to systems
-  import_tasks: common-packages.yml
+- name: "Install common packages"
+  ansible.builtin.package:
+    state: present
+    name:
+      - vim-gtk
+      - tmux
+      - git
+      - silversearcher-ag
+      - build-essential
+      - gawk
+      - stow
+      - fasd
+      - direnv
+      - exuberant-ctags
+        # Needed for tmux-yank
+      - xcopy
+  become: true
 
-- name: Install packages specific to ubuntu
-  import_tasks: ubuntu-packages.yml
-  when: ansible_facts['os_family']|lower == 'ubuntu'
+- name: Install ubuntu specific packages.
+  ansible.builtin.package:
+    state: present
+    name:
+      - ubuntu-restricted-extras
+      - ppa-purge
+  become: true
