@@ -1,0 +1,16 @@
+---
+- name: "Install common packages"
+  ansible.builtin.package:
+    state: present
+    name:
+      - vim-gtk
+      - tmux
+      - git
+      - silversearcher-ag
+      - build-essential
+      - gawk
+      - stow
+      - fasd
+      - direnv
+      - exuberant-ctags
+  become: true

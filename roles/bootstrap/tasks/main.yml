@@ -1,0 +1,8 @@
+---
+
+- name: Install packages common to systems
+  import_tasks: common-packages.yml
+
+- name: Install packages specific to ubuntu
+  import_tasks: ubuntu-packages.yml
+  when: ansible_facts['os_family']|lower == 'ubuntu'
