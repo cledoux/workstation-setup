@@ -18,9 +18,35 @@
 - name: Download latest logseq release
   get_url:
     url: "{{ download_url.stdout }}"
-    dest: ~/.local/bin/logseq
-    mode: 0774
+    dest: /tmp/logseq
     tmp_dest: /tmp/
-    force: yes
+    force: no
     headers:
       Accept: "application/octet-stream"
+
+- name: Install logseq globally
+  become: yes
+  copy:
+    src: /tmp/logseq
+    dest: /usr/bin/logseq
+    mode: 0777
+    owner: root
+    force: yes
+
+- name: Copy desktop file.
+  become: true
+  copy:
+    src: logseq.desktop
+    dest: /usr/share/applications/logseq.desktop
+    mode: 0644
+    owner: root
+    force: yes
+
+- name: Copy icon
+  become: true
+  copy:
+    src: logseq.png
+    dest: /usr/share/icons/logseq.png
+    mode: 0644
+    owner: root
+    force: yes

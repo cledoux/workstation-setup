@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Logseq
+Exec=/usr/bin/logseq
+Icon=/usr/share/icons/logseq.png
+Categories=Office;
