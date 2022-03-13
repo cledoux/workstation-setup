@@ -17,6 +17,7 @@
         # Needed for tmux-yank
       - xsel
   become: true
+  become_method: sudo
 
 - name: Install ubuntu specific packages.
   ansible.builtin.package:
@@ -25,4 +26,16 @@
       - ubuntu-restricted-extras
       - ppa-purge
   become: true
+  become_method: sudo
   when: ansible_facts['os_family']|lower == 'ubuntu'
+
+- name: Setup .local file structure
+  file:
+    path: "~/.local/{{item}}"
+    state: directory
+  loop:
+    - bin
+    - var
+    - etc
+    - lib
+    - share
