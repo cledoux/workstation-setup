@@ -13,6 +13,7 @@
       - stow
       - fasd
       - direnv
+      - jq
       - exuberant-ctags
         # Needed for tmux-yank
       - xsel

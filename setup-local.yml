@@ -3,3 +3,5 @@
   tasks:
     - include_role:
         name: bootstrap
+    - include_role:
+        name: logseq

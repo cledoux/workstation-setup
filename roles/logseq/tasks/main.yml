@@ -1,0 +1,26 @@
+---
+- name: Get latest release info
+  get_url:
+    url: https://api.github.com/repos/logseq/logseq/releases/latest
+    force: yes
+    headers:
+      Accept: "application/vnd.github.v3+json"
+    dest: "/tmp/logseq-release-info.json"
+
+- name: Get download url
+  shell: |
+    cat "/tmp/logseq-release-info.json" | jq '.assets | .[] | select(.browser_download_url | contains(".AppImage")) | .browser_download_url' | sed -e 's/^"//' -e 's/"$//'
+  register: "download_url"
+
+- debug:
+    msg: "{{ download_url.stdout }}"
+
+- name: Download latest logseq release
+  get_url:
+    url: "{{ download_url.stdout }}"
+    dest: ~/.local/bin/logseq
+    mode: 0774
+    tmp_dest: /tmp/
+    force: yes
+    headers:
+      Accept: "application/octet-stream"
