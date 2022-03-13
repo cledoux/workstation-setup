@@ -15,7 +15,7 @@
       - direnv
       - exuberant-ctags
         # Needed for tmux-yank
-      - xcopy
+      - xsel
   become: true
 
 - name: Install ubuntu specific packages.
