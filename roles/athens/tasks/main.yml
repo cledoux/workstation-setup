@@ -1,7 +1,9 @@
 ---
 - name: Get latest release info
   get_url:
-    url: https://api.github.com/repos/athensresearch/athens/releases/latest
+    # Add /latest to the end to get the release tagged as "latest"
+    # Curent URL will return most recent release.
+    url: https://api.github.com/repos/athensresearch/athens/releases
     force: yes
     headers:
       Accept: "application/vnd.github.v3+json"
@@ -9,7 +11,7 @@
 
 - name: Get download url
   shell: |
-    cat "/tmp/athens-release-info.json" | jq '.assets | .[] | select(.browser_download_url | contains(".AppImage")) | .browser_download_url' | sed -e 's/^"//' -e 's/"$//'
+    cat "/tmp/athens-release-info.json" | jq '.[1] | .assets | .[] | select(.browser_download_url | contains(".AppImage")) | .browser_download_url' | sed -e 's/^"//' -e 's/"$//'
   register: "download_url"
 
 - debug:
