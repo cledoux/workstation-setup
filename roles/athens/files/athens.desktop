@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Athens
+Exec=/usr/bin/athens
+Icon=/usr/share/icons/athens.png
+Categories=Office;

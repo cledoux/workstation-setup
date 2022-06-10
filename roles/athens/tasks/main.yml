@@ -1,0 +1,52 @@
+---
+- name: Get latest release info
+  get_url:
+    url: https://api.github.com/repos/athensresearch/athens/releases/latest
+    force: yes
+    headers:
+      Accept: "application/vnd.github.v3+json"
+    dest: "/tmp/athens-release-info.json"
+
+- name: Get download url
+  shell: |
+    cat "/tmp/athens-release-info.json" | jq '.assets | .[] | select(.browser_download_url | contains(".AppImage")) | .browser_download_url' | sed -e 's/^"//' -e 's/"$//'
+  register: "download_url"
+
+- debug:
+    msg: "{{ download_url.stdout }}"
+
+- name: Download latest athens release
+  get_url:
+    url: "{{ download_url.stdout }}"
+    dest: /tmp/athens
+    tmp_dest: /tmp/
+    force: no
+    headers:
+      Accept: "application/octet-stream"
+
+- name: Install Athens globally
+  become: yes
+  copy:
+    src: /tmp/athens
+    dest: /usr/bin/athens
+    mode: 0777
+    owner: root
+    force: yes
+
+- name: Copy desktop file.
+  become: true
+  copy:
+    src: athens.desktop
+    dest: /usr/share/applications/athens.desktop
+    mode: 0644
+    owner: root
+    force: yes
+
+- name: Copy icon
+  become: true
+  copy:
+    src: athens.png
+    dest: /usr/share/icons/athens.png
+    mode: 0644
+    owner: root
+    force: yes
