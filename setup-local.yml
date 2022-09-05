@@ -11,3 +11,12 @@
         name: etckeeper
     - include_role:
         name: sysstat
+    - name: "Enable sysreq magic keys"
+      become: true
+      ansible.builtin.copy:
+        content: |
+          kernel.sysrq=1
+        dest: /etc/sysctl.d/90-sysrq.conf
+        owner: root
+        group: root
+        mode: '0644'
