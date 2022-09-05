@@ -1,3 +1,7 @@
+#!/usr/bin/ansible-playbook -K
+#
+# General setup that applies to all systems
+# Just run as a script: `./setup-local.yml`
 ---
 - hosts: localhost
   tasks:

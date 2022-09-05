@@ -1,0 +1,7 @@
+---
+
+- name: Install restic
+  include: 'install.yml'
+
+- name: Configure Local Repo
+  include: 'config-local.yml'

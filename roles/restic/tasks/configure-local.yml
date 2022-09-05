@@ -1,0 +1,4 @@
+---
+
+- name: Initialize local repo
+  command: 'restic init --repo {{item.value}}'
