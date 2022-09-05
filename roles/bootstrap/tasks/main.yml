@@ -15,8 +15,9 @@
       - direnv
       - jq
       - exuberant-ctags
+      - shellcheck
         # Needed for tmux-yank
-      - xsel
+      - xclip
   become: true
   become_method: sudo
 
