@@ -1,0 +1,35 @@
+---
+- name: "Install etckeeper packages"
+  ansible.builtin.package:
+    state: present
+    name:
+      - etckeeper
+  become: true
+
+- name: "Init"
+  ansible.builtin.shell: etckeeper init
+  args:
+    chdir: /etc/
+    creates: /etc/.etckeeper
+  become: true
+
+- name: "Copy hook"
+  ansible.builtin.copy:
+    content: |
+      #!/bin/sh
+      exec git gc
+    dest: /etc/etckeeper/post-install.d/99git-gc
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
+
+- name: "Initial commit"
+  ansible.builtin.shell: |
+    git add .
+    git commit -m "initial commit"
+    touch /etc/etckeeper/ansible.setup.done
+  args:
+    chdir: /etc/etckeeper
+    creates: /etc/etckeeper/ansible.setup.done
+  become: true
