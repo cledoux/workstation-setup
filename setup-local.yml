@@ -9,3 +9,5 @@
         name: bootstrap
     - include_role:
         name: etckeeper
+    - include_role:
+        name: sysstat

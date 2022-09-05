@@ -1,0 +1,15 @@
+---
+
+- name: "Install"
+  ansible.builtin.package:
+    state: present
+    name:
+      - sysstat
+  become: true
+
+- name: "Keep 28 days of history"
+  ansible.builtin.lineinfile:
+    path: /etc/sysstat/sysstat
+    regex: '^HISTORY='
+    line: HISTORY=28
+  become: true
