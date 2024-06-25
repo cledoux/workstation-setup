@@ -11,6 +11,8 @@
         name: etckeeper
     - include_role:
         name: sysstat
+    - include_role:
+        name: logseq
     - name: "Enable sysreq magic keys"
       become: true
       ansible.builtin.copy:
