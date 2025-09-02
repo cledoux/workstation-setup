@@ -1,0 +1,11 @@
+#!/usr/bin/ansible-playbook -K
+#
+# General setup that applies to all systems
+# Just run as a script: `./work.yml`
+---
+- hosts: localhost
+  tasks:
+    - include_role:
+        name: bootstrap
+    - include_role:
+        name: logseq

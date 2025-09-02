@@ -3,12 +3,15 @@
 # Specialized setup for plexy host.
 # Just run as a script: `./plexy.yml`
 ---
-# Include the common bootstrap.
-- name: Include a play after another play
-  ansible.builtin.import_playbook: setup-local.yml
-
-# Plexy specific roles.
-# - hosts: localhost
-#   tasks:
-#     - include_role:
-#         name: restic
+- hosts: localhost
+  tasks:
+    - include_role:
+        name: bootstrap
+    - include_role:
+        name: logseq
+    - include_role:
+        name: etckeeper
+    - include_role:
+        name: sysstat
+    - include_role:
+        name: restic
