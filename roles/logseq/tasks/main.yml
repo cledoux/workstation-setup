@@ -46,20 +46,26 @@
 #     force: yes
 # }}}
 
-- name: Copy desktop file.
-  become: true
-  copy:
-    src: logseq.desktop
-    dest: /usr/share/applications/logseq.desktop
-    mode: 0644
-    owner: root
-    force: yes
-
-- name: Copy icon
-  become: true
-  copy:
-    src: logseq.png
-    dest: /usr/share/icons/logseq.png
-    mode: 0644
-    owner: root
-    force: yes
+# Setup desktop files {{{
+# This should not be needed for the flatpak based method as flatpak adds
+# the desktop entried. You do need to include the flatpak directories in
+# XDG_DATA_DIR enviornment variable.
+#
+# - name: Copy desktop file.
+#   become: true
+#   copy:
+#     src: logseq.desktop
+#     dest: /usr/share/applications/logseq.desktop
+#     mode: 0644
+#     owner: root
+#     force: yes
+#
+# - name: Copy icon
+#   become: true
+#   copy:
+#     src: logseq.png
+#     dest: /usr/share/icons/logseq.png
+#     mode: 0644
+#     owner: root
+#     force: yes
+# }}}
