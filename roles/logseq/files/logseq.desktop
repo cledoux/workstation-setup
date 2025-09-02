@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=Logseq
-Exec=/usr/bin/logseq
+Exec=flatpak run --socket=wayland com.logseq.Logseq
 Icon=/usr/share/icons/logseq.png
 Categories=Office;

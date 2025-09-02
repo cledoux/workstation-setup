@@ -18,6 +18,8 @@
       - shellcheck
         # Needed for tmux-yank
       - xclip
+      - flatpak
+      - flatseal
   become: true
   become_method: sudo
 

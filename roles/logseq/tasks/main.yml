@@ -1,37 +1,50 @@
+# vim: foldmethod=marker foldmarker={{{,}}} :
 ---
-- name: Get latest release info
-  get_url:
-    url: https://api.github.com/repos/logseq/logseq/releases/latest
-    force: yes
-    headers:
-      Accept: "application/vnd.github.v3+json"
-    dest: "/tmp/logseq-release-info.json"
+# Flatpak install method.
+- name: Install from flatpak
+  become: true
+  community.general.flatpak:
+    name: com.spotify.Client
+    state: present
+    remote: flathub # Specify the remote repository
+    method: system # Or 'user' for user-specific installation
 
-- name: Get download url
-  shell: |
-    cat "/tmp/logseq-release-info.json" | jq '.assets | .[] | select(.browser_download_url | contains(".AppImage")) | .browser_download_url' | sed -e 's/^"//' -e 's/"$//'
-  register: "download_url"
-
-- debug:
-    msg: "{{ download_url.stdout }}"
-
-- name: Download latest logseq release
-  get_url:
-    url: "{{ download_url.stdout }}"
-    dest: /tmp/logseq
-    tmp_dest: /tmp/
-    force: no
-    headers:
-      Accept: "application/octet-stream"
-
-- name: Install logseq globally
-  become: yes
-  copy:
-    src: /tmp/logseq
-    dest: /usr/bin/logseq
-    mode: 0777
-    owner: root
-    force: yes
+# AppImage installation method. {{{
+#
+# - name: Get latest release info
+#   get_url:
+#     url: https://api.github.com/repos/logseq/logseq/releases/latest
+#     force: yes
+#     headers:
+#       Accept: "application/vnd.github.v3+json"
+#     dest: "/tmp/logseq-release-info.json"
+#
+# - name: Get download url
+#   shell: |
+#     cat "/tmp/logseq-release-info.json" | jq '.assets | .[] | select(.browser_download_url | contains(".AppImage")) | .browser_download_url' | sed -e 's/^"//' -e 's/"$//'
+#   register: "download_url"
+#
+# - debug:
+#     msg: "{{ download_url.stdout }}"
+#
+# - name: Download latest logseq release
+#   get_url:
+#     url: "{{ download_url.stdout }}"
+#     dest: /tmp/logseq
+#     tmp_dest: /tmp/
+#     force: no
+#     headers:
+#       Accept: "application/octet-stream"
+#
+# - name: Install logseq globally
+#   become: yes
+#   copy:
+#     src: /tmp/logseq
+#     dest: /usr/bin/logseq
+#     mode: 0777
+#     owner: root
+#     force: yes
+# }}}
 
 - name: Copy desktop file.
   become: true
